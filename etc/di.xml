@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2021 AxProd
+  ~ See https://github.com/alex-dev-github/magento2-monday/blob/main/LICENSE for license details.
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="AxProd\Monday\Api\DashboardRepositoryInterface" type="AxProd\Monday\Model\Dashboard\DashboardRepository"/>
+    <preference for="AxProd\Monday\Api\Data\DashboardInterface" type="AxProd\Monday\Model\Dashboard\Dashboard"/>
+    <preference for="AxProd\Monday\Api\ProductRepositoryInterface" type="AxProd\Monday\Model\Product\ProductRepository"/>
+    <preference for="AxProd\Monday\Api\Data\ProductInterface" type="AxProd\Monday\Model\Product\Product"/>
+    <type name="Magento\Catalog\Model\ResourceModel\Product">
+        <plugin name="publish_product_save" type="AxProd\Monday\Plugin\ProductSavePlugin"/>
+    </type>
+    <virtualType name="AxProdMondayLogger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="error" xsi:type="object">AxProd\Monday\Logger\Handler\ErrorHandler</item>
+                <item name="info" xsi:type="object">AxProd\Monday\Logger\Handler\InfoHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="AxProd\Monday\Observer\Adminhtml\SaveProduct">
+        <arguments>
+            <argument name="logger" xsi:type="object">AxProdMondayLogger</argument>
+        </arguments>
+    </type>
+    <type name="AxProd\Monday\Controller\Adminhtml\System\Config\Dashboard\ListDashboard">
+        <arguments>
+            <argument name="logger" xsi:type="object">AxProdMondayLogger</argument>
+        </arguments>
+    </type>
+    <type name="AxProd\Monday\Model\Queue\AddConsumer">
+        <arguments>
+            <argument name="logger" xsi:type="object">AxProdMondayLogger</argument>
+        </arguments>
+    </type>
+    <type name="AxProd\Monday\Model\Queue\AddPublisher">
+        <arguments>
+            <argument name="logger" xsi:type="object">AxProdMondayLogger</argument>
+        </arguments>
+    </type>
+    <type name="AxProd\Monday\Model\Queue\Processor">
+        <arguments>
+            <argument name="logger" xsi:type="object">AxProdMondayLogger</argument>
+        </arguments>
+    </type>
+</config>

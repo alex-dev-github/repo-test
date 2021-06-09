@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<!--
+  ~ Copyright (c) 2021 AxProd
+  ~ See https://github.com/alex-dev-github/magento2-monday/blob/main/LICENSE for license details.
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <monday>
+            <general>
+                <api_token backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+            </general>
+        </monday>
+    </default>
+</config>

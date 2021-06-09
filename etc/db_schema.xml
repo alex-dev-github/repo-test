@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2021 AxProd
+  ~ See https://github.com/alex-dev-github/magento2-monday/blob/main/LICENSE for license details.
+  -->
+
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="monday_dashboard_entity" resource="default" engine="innodb" comment="Monday Dashboard Entity">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true"
+                comment="Entity ID"/>
+        <column xsi:type="varchar" name="monday_id" nullable="false" length="255" comment="Monday Dashboard ID"/>
+        <column xsi:type="varchar" name="name" nullable="true" length="255" comment="Name"/>
+        <column xsi:type="varchar" name="code" nullable="true" length="32" comment="Code"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+    <table name="monday_product_entity" resource="default" engine="innodb" comment="Monday Product Entity">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true"
+                comment="Entity ID"/>
+        <column xsi:type="int" name="product_id" unsigned="true" nullable="false"
+                identity="false" default="0" comment="Product Entity ID"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Create date"/>
+        <column xsi:type="smallint" name="sync_status" default="0" identity="false" padding="12"
+                unsigned="true" nullable="false" comment="Synchronization status"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <index referenceId="MONDAY_PRODUCT_ENTITY_PRODUCT_ID" indexType="btree">
+            <column name="product_id"/>
+        </index>
+        <index referenceId="MONDAY_DASHBOARD_SYNC_STATUS_CREATED_AT" indexType="btree">
+            <column name="sync_status"/>
+            <column name="created_at"/>
+        </index>
+    </table>
+</schema>

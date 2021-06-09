@@ -1,0 +1,30 @@
+<?php
+/*
+ * Copyright (c) 2021 AxProd
+ * See https://github.com/alex-dev-github/magento2-monday/blob/main/LICENSE for license details.
+ */
+
+/**
+ * @var $block AxProd\Monday\Block\System\Config\Dashboards
+ */
+?>
+<div v-cloak id="monday-dashboards" class="monday-dashboards">
+    <div class="monday-dashboards__content">
+        <button v-on:click="isCreated ? recreateDashboards() : createDashboards()" type="button" class="monday-dashboards__button">
+            <span>{{ isCreated ? titleRecreate : titleCreate }}</span>
+        </button>
+    </div>
+    <ul class="monday-dashboards__list">
+        <li v-for="item in dashboards" class="monday-dashboards__list-item">{{ item.name }}</li>
+    </ul>
+</div>
+<script type="text/x-magento-init">
+  {
+    "#monday-dashboards": {
+      "mondaySystemDashboards": {
+        "ajaxUrl":          "<?= $block->getAjaxUrl() ?>",
+        "ajaxUrlGetList":   "<?= $block->getListAjaxUrl() ?>"
+      }
+    }
+  }
+</script>

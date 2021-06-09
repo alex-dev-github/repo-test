@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2021 AxProd
+  ~ See https://github.com/alex-dev-github/magento2-monday/blob/main/LICENSE for license details.
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="axprod" translate="label" sortOrder="10">
+            <label>AxProd</label>
+        </tab>
+        <section id="monday" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Monday Integration</label>
+            <tab>axprod</tab>
+            <resource>AxProd_Monday::monday_config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General Configuration</label>
+                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Module Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="api_token" type="obscure" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>API v2 Token</label>
+                    <comment><![CDATA[Accessing your tokens - <a href="https://monday.com/developers/v2#authentication-section" target="blank">here</a>]]></comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <validate>required-entry no-whitespace</validate>
+                    <depends>
+                        <field id="monday/general/enable">1</field>
+                    </depends>
+                </field>
+                <field id="create_dashboard" translate="label" type="button" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Dashboards</label>
+                    <frontend_model>AxProd\Monday\Block\System\Config\Dashboards</frontend_model>
+                    <depends>
+                        <field id="monday/general/enable">1</field>
+                    </depends>
+                </field>
+                <field id="new_product" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>New Product</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Triggers when a new product is created in Magento.]]></comment>
+                    <depends>
+                        <field id="monday/general/enable">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
