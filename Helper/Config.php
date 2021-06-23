@@ -26,6 +26,7 @@ class Config extends AbstractHelper {
     public function isSyncEnabled() : bool {
         $a = 1;
         $a = 2;
+        $b = 1;
 
         return $this->scopeConfig->getValue(
             self::CONFIG_PATH_MODULE_ENABLE,
